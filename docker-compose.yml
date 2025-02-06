@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  database:
+    image: postgres:15
+    container_name: RegisterProducts
+    ports:
+      - "3333:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    networks:
+      - app_network
+
+  app:
+    build:
+      context: target/generated-test-sources/test-annotations
+      dockerfile: Dockerfile
+    container_name: aplicacao
+    ports:
+      - "8080:3000"
+    environment:
+      DATABASE_HOST: database
+      DATABASE_PORT: 5432
+      DATABASE_USER: postgres
+      DATABASE_PASSWORD: postgres
+      DATABASE_NAME: postgres
+    depends_on:
+      - database
+    networks:
+      - app_network
+
+volumes:
+  pg_data:
+
+networks:
+  app_network:
