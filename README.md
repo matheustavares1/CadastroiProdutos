@@ -29,6 +29,18 @@ POST /auth/register/ - Realizar Registro de Usuário
 POST /products/add/ - Adicionar Produtos
 GET /products/ - Listar Produtos
 ```
+## Como Excutar:
+
+1. Clone o repositório
+2. Buildar o docker-compose
+```
+docker-compose build
+```
+3. Rodar o projeto
+```
+docker-compose  up -d
+```
+
 ## Requisitos:
 
 * Docker
