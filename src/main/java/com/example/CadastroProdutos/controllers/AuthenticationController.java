@@ -17,12 +17,17 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/auth")
 public class AuthenticationController {
 
+
+    private final AuthenticationManager authenticationManager;
+    private final  UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+
     @Autowired
-    AuthenticationManager authenticationManager;
-    @Autowired
-     UserRepository userRepository;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    public AuthenticationController(AuthenticationManager authenticationManager, UserRepository userRepository, PasswordEncoder passwordEncoder) {
+        this.authenticationManager = authenticationManager;
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody @Valid AuthenticationDTO data){

@@ -5,29 +5,39 @@ services:
     image: postgres:15
     container_name: RegisterProducts
     ports:
-      - "3333:5432"
+      - "5432:5432"
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: postgres
-    volumes:
-      - pg_data:/var/lib/postgresql/data
+      POSTGRES_DB: registerProducts
+    networks:
+      - app_network
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@email.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "6060:80"
+    depends_on:
+      - database
     networks:
       - app_network
 
   app:
     build:
-      context: target/generated-test-sources/test-annotations
       dockerfile: Dockerfile
-    container_name: aplicacao
+    container_name: api-registerProducts
     ports:
-      - "8080:3000"
+      - "8080:8080"
     environment:
       DATABASE_HOST: database
       DATABASE_PORT: 5432
       DATABASE_USER: postgres
       DATABASE_PASSWORD: postgres
-      DATABASE_NAME: postgres
+      DATABASE_NAME: registerProducts
     depends_on:
       - database
     networks:

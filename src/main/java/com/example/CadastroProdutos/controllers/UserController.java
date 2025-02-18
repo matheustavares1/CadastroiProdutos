@@ -1,6 +1,7 @@
 package com.example.CadastroProdutos.controllers;
 
 import java.util.List;
+import java.util.UUID;
 
 import com.example.CadastroProdutos.dtos.ProductDTO;
 import org.springframework.http.HttpStatus;
@@ -32,5 +33,12 @@ public class UserController {
 	@GetMapping
 	public List<ProductDTO> getProducts(){
 		return service.getProducts();
+	}
+
+	//Deletar produto por id
+	@DeleteMapping("/delete")
+	public ResponseEntity<String> deleteProduct(@RequestBody Integer id) {
+		String response = service.deleteProduct(id);
+		return ResponseEntity.status(HttpStatus.OK).body(response);
 	}
 }
