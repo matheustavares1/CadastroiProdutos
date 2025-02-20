@@ -34,14 +34,14 @@ public class ProductService {
 	}
 
 	//Deletar produtor por id
-	public String deleteProduct(Integer id) {
-
-		if (repository.existsById(id)) {
-			repository.deleteById(id);
-			return "Product deleted";
-		}
-
-		return "Product not found";
-
+	public void deleteProduct(Integer id) {
+			if(repository.findById(id).isPresent()) {
+				repository.deleteById(id);
+			}
+			else {
+				throw new RuntimeException("ID not found");
+			}
 	}
+
+
 }

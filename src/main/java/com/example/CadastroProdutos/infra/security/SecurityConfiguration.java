@@ -5,8 +5,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -26,17 +28,24 @@ AUTHENTICATORMANEGER É APRA AUTENTICAR O USUARIO
 @Configuration
 public class SecurityConfiguration {
 
+
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
-                .csrf(crsf -> crsf.disable())
+                .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) //PARA NAO GUARDAR INFORMACOES DA SECAO
-                .authorizeHttpRequests(authorize -> authorize //AQUI ESOTU AUTORIZANDO AS ROLES A FAZEREM AS REQUISCOES
-                        .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/auth/register").hasRole("ADMIN")
-                        .anyRequest().permitAll()
-                )
-                .build();
+                .formLogin(form -> form.loginPage("/login"))
+                .httpBasic(Customizer.withDefaults())
+                .authorizeHttpRequests(authorize -> { //AQUI ESOTU AUTORIZANDO AS ROLES A FAZEREM AS REQUISCOES
+                        authorize.requestMatchers(HttpMethod.POST, "/auth/login").permitAll();
+                        authorize.requestMatchers(HttpMethod.POST, "/auth/register").hasRole("ADMIN");
+                        authorize.requestMatchers(HttpMethod.POST, "/products/add").hasAnyRole("USER", "ADMIN");
+                        authorize.requestMatchers(HttpMethod.POST, "/products/{id}").hasAnyRole("USER", "ADMIN");
+                        authorize.requestMatchers(HttpMethod.GET, "/products/").hasRole("ADMIN");
+                        authorize.anyRequest().authenticated();
+                })
+                    .build();
 
     }
 
@@ -51,6 +60,7 @@ public class SecurityConfiguration {
     //CRIPTOGRAFIA DA SENHA
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+
+        return new BCryptPasswordEncoder(10);
     }
 }

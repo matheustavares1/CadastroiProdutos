@@ -36,9 +36,9 @@ public class UserController {
 	}
 
 	//Deletar produto por id
-	@DeleteMapping("/delete")
-	public ResponseEntity<String> deleteProduct(@RequestBody Integer id) {
-		String response = service.deleteProduct(id);
-		return ResponseEntity.status(HttpStatus.OK).body(response);
+	@DeleteMapping("/{id}")
+	public void deleteProduct(@PathVariable Integer id) {
+		service.deleteProduct(id);
+
 	}
 }

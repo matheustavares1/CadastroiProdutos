@@ -25,6 +25,7 @@ public class User implements UserDetails {
     @Column(name = "password")
     private String password;
     @Column(name = "roles")
+    @Enumerated(EnumType.STRING)
     private UserRoles roles;
 
     public User(){
@@ -59,18 +60,4 @@ public class User implements UserDetails {
         return UserDetails.super.isAccountNonExpired();
     }
 
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return true;
-    }
 }

@@ -8,6 +8,7 @@ import com.example.CadastroProdutos.repositories.UserRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -30,7 +31,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity login(@RequestBody @Valid AuthenticationDTO data){
+    public ResponseEntity login(@RequestBody AuthenticationDTO data){
         //FAZER UM TOKEN DO MEU LOGIN E SENHA
         var usernamePassword = new UsernamePasswordAuthenticationToken(data.username(), data.password());
         //RECEBE O TOKEN POR PARAMETRO(USUARIO E SENHA) PARA AUTENTICAR
@@ -39,7 +40,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity register(@RequestBody @Valid RegisterDTO data){
+    public ResponseEntity register(@RequestBody RegisterDTO data){
         if(this.userRepository.findByUsername(data.username()) != null) return ResponseEntity.badRequest().build();
 
         //REFERENTE AO BEAN DA CLASSE DE CONFIGURACAO DE SEGURANCA
@@ -55,3 +56,5 @@ public class AuthenticationController {
         this.userRepository.deleteById(id);
     }
 }
+
+
