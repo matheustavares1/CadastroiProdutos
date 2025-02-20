@@ -23,11 +23,13 @@ do Spring Security para gerenciamento de permissões e acessos.
 ```
 POST /auth/login/ - Realizar Login
 POST /auth/register/ - Realizar Registro de Usuário
+DELETE /{id}^- Delete Usuários
 ```
 ### Usuário
 ```
 POST /products/add/ - Adicionar Produtos
 GET /products/ - Listar Produtos
+DELETE /{id} - Deleta Produtos
 ```
 ## Como Excutar:
 
