@@ -30,7 +30,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity login(@RequestBody @Valid AuthenticationDTO data){
+    public ResponseEntity login(@RequestBody AuthenticationDTO data){
         //FAZER UM TOKEN DO MEU LOGIN E SENHA
         var usernamePassword = new UsernamePasswordAuthenticationToken(data.username(), data.password());
         //RECEBE O TOKEN POR PARAMETRO(USUARIO E SENHA) PARA AUTENTICAR
@@ -39,7 +39,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity register(@RequestBody @Valid RegisterDTO data){
+    public ResponseEntity register(@RequestBody RegisterDTO data){
         if(this.userRepository.findByUsername(data.username()) != null) return ResponseEntity.badRequest().build();
 
         //REFERENTE AO BEAN DA CLASSE DE CONFIGURACAO DE SEGURANCA

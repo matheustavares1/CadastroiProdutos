@@ -5,3 +5,10 @@ create table products(
   price numeric(10,2) not null,
   available boolean not null
   );
+
+  create table users(
+  id text primary key not null,
+  login varchar(100) not null,
+  password text not null,
+  roles text not null
+  );

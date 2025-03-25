@@ -1,17 +1,13 @@
 package com.example.CadastroProdutos.services;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
-
 import com.example.CadastroProdutos.dtos.ProductDTO;
-import org.springframework.data.crossstore.ChangeSetPersister;
+import com.example.CadastroProdutos.entities.RegisterProduct;
+import com.example.CadastroProdutos.repositories.ProductRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import com.example.CadastroProdutos.entities.RegisterProduct;
-import com.example.CadastroProdutos.repositories.ProductRepository;
+import java.util.List;
 
 @Service
 public class ProductService {
@@ -33,15 +29,19 @@ public class ProductService {
 		return repository.getListProducts();
 	}
 
+	//Todos os Produtos
+	public List<RegisterProduct> getAllProducts() {
+		return repository.findAll();
+	}
+
 	//Deletar produtor por id
 	public String deleteProduct(Integer id) {
 
-		if (repository.existsById(id)) {
-			repository.deleteById(id);
-			return "Product deleted";
+		if (!repository.existsById(id)) {
+			throw new RuntimeException("Product not found");
 		}
 
-		return "Product not found";
+		return "Product deleted";
 
 	}
 }

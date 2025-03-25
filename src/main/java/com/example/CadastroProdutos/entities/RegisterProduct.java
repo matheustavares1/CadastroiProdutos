@@ -6,6 +6,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "products")
@@ -23,7 +25,18 @@ public class RegisterProduct {
 	private Double price;
 	@Column(name = "available")
 	private boolean available;
-	
+
+	public RegisterProduct() {
+	}
+
+	public RegisterProduct(Integer id, String name, String description, Double price, boolean available) {
+		this.id = id;
+		this.name = name;
+		this.description = description;
+		this.price = price;
+		this.available = available;
+	}
+
 	//GETTERS E SETTES
 	public Integer getId() {
 		return id;
@@ -49,12 +62,10 @@ public class RegisterProduct {
 	public void setPrice(Double price) {
 		this.price = price;
 	}
+	public void setAvailable(boolean available) {
+		this.available = available;
+	}
 	public boolean isAvailable() {
 		return available;
 	}
-	public void setAvailable(boolean available) {
-		this.available = available;
-	} 
-	
-	
 }

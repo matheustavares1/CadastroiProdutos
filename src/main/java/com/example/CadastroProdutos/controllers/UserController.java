@@ -41,4 +41,9 @@ public class UserController {
 		String response = service.deleteProduct(id);
 		return ResponseEntity.status(HttpStatus.OK).body(response);
 	}
+
+	@GetMapping
+	public ResponseEntity<?> getAllProducts(){
+		return ResponseEntity.status(HttpStatus.OK).body(service.getAllProducts());
+	}
 }
