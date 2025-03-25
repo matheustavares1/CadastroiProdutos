@@ -1,4 +1,4 @@
-9# Cadastro de Produtos
+# Cadastro de Produtos
 ## Descrição:
 Uma API simples desenvolvida em Java utilizando o framework Spring Boot. Esta aplicação permite gerenciar o cadastro de produtos, oferecendo funcionalidades como criação, leitura, atualização e exclusão (CRUD) de produtos em um banco de dados relacional e a utilização 
 do Spring Security para gerenciamento de permissões e acessos.
